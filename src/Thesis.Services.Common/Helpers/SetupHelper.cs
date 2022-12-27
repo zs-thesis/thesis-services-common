@@ -10,8 +10,16 @@ using Thesis.Services.Common.Options;
 
 namespace Thesis.Services.Common.Helpers;
 
+/// <summary>
+/// Помощник для конфигурации сервиса
+/// </summary>
 public static class SetupHelper
 {
+    /// <summary>
+    /// Конфигурация сервиса
+    /// </summary>
+    /// <param name="builder">Билдер</param>
+    /// <returns>Сконфигурированное приложение</returns>
     public static WebApplication BuildWebApplication(this WebApplicationBuilder builder)
     {
         var jwtOptions = builder.Configuration.GetSection(nameof(JwtOptions)).Get<JwtOptions>();

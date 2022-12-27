@@ -24,12 +24,12 @@ public class JwtOptions
     public string Key { get; set; } = string.Empty;
     
     /// <summary>
-    /// Время жизни токена
+    /// Время жизни токена доступа
     /// </summary>
     public int AccessTokenLifetime { get; set; }
     
     /// <summary>
-    /// Время жизни refresh-токена
+    /// Время жизни токена обновления
     /// </summary>
     public int RefreshTokenLifetime { get; set; }
     

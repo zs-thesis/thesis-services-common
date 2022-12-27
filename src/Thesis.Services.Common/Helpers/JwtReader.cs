@@ -7,18 +7,33 @@ using Thesis.Services.Common.Options;
 
 namespace Thesis.Services.Common.Helpers;
 
+/// <summary>
+/// Класс для чтения Jwt
+/// </summary>
 public class JwtReader
 {
     private readonly IOptions<JwtOptions> _jwtOptions;
     private readonly ILogger<JwtReader> _logger;
 
+    /// <summary>
+    /// Конструктор класса <see cref="JwtReader"/>
+    /// </summary>
+    /// <param name="jwtOptions">Настройки jwt</param>
+    /// <param name="logger">Логгер</param>
     public JwtReader(IOptions<JwtOptions> jwtOptions, ILogger<JwtReader> logger)
     {
         _jwtOptions = jwtOptions;
         _logger = logger;
     }
 
-    private bool Read(string token, out ClaimsPrincipal? claims, out DateTime validTo)
+    /// <summary>
+    /// Прочитать Jwt
+    /// </summary>
+    /// <param name="token">Jwt</param>
+    /// <param name="claims">Данные пользователя</param>
+    /// <param name="validTo">Дата валидности</param>
+    /// <returns></returns>
+    public bool ReadAccessToken(string token, out ClaimsPrincipal? claims, out DateTime validTo)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var validations = new TokenValidationParameters
@@ -31,6 +46,7 @@ public class JwtReader
             ValidAudience = $"*.{_jwtOptions.Value.Issuer}",
             ValidateLifetime = true
         };
+        
         try
         {
             claims = tokenHandler.ValidateToken(token, validations, out var validatedToken);
@@ -41,6 +57,7 @@ public class JwtReader
         {
             _logger.LogWarning(ex.ToString());
         }
+        
         claims = null;
         validTo = DateTime.MinValue;
         return false;
