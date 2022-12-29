@@ -26,11 +26,13 @@ public class JwtOptions
     /// <summary>
     /// Время жизни токена доступа
     /// </summary>
+    /// <remarks>Время в минутах</remarks>
     public int AccessTokenLifetime { get; set; }
     
     /// <summary>
     /// Время жизни токена обновления
     /// </summary>
+    /// <remarks>Время в минутах</remarks>
     public int RefreshTokenLifetime { get; set; }
     
     /// <summary>

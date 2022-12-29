@@ -22,10 +22,16 @@ public static class SetupHelper
     /// <returns>Сконфигурированное приложение</returns>
     public static WebApplication BuildWebApplication(this WebApplicationBuilder builder)
     {
-        var jwtOptions = builder.Configuration.GetSection(nameof(JwtOptions)).Get<JwtOptions>();
+        var jwtOptionsSection = builder.Configuration.GetSection(nameof(JwtOptions));
+        var jwtOptions = jwtOptionsSection.Get<JwtOptions>();
+
+        if (jwtOptions == null)
+        {
+            throw new Exception("JwtOptions is null");
+        }
         
         builder.Services.AddOptions<JwtOptions>()
-            .Bind(builder.Configuration.GetSection(nameof(JwtOptions)));
+            .Bind(jwtOptionsSection);
         
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
